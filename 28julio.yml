@@ -404,25 +404,25 @@ loadBalancer: {}
   rdbcompression yes
   rdbchecksum yes
   dbfilename dump.rdb
-  	slave-serve-stale-data yes
-  	slave-read-only yes
-  	repl-diskless-sync no
-  	repl-disable-tcp-nodelay no
-  	appendonly yes
-  	appendfilename "appendonly.aof"
-  	appendfsync everysec
-  	no-appendfsync-on-rewrite no
-  	auto-aof-rewrite-percentage 100
-  	auto-aof-rewrite-min-size 64mb
-  	aof-load-truncated yes
-  	lua-time-limit 5000
-  	activerehashing no
-  	aof-rewrite-incremental-fsync yes
-  	dir /var/lib/redis/data
+  slave-serve-stale-data yes
+  slave-read-only yes
+  repl-diskless-sync no
+  repl-disable-tcp-nodelay no
+  appendonly yes
+  appendfilename "appendonly.aof"
+  appendfsync everysec
+  no-appendfsync-on-rewrite no
+  auto-aof-rewrite-percentage 100
+  auto-aof-rewrite-min-size 64mb
+  aof-load-truncated yes
+  lua-time-limit 5000
+  activerehashing no
+  aof-rewrite-incremental-fsync yes
+  dir /var/lib/redis/data
   kind: ConfigMap
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
   	threescale_component_element: redis
@@ -430,35 +430,35 @@ name: redis-config
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
-	creationTimestamp: null
-	labels:
+    creationTimestamp: null
+    labels:
   	app: ${APP_LABEL}
   	threescale_component: backend
   	threescale_component_element: redis
-	name: backend-redis-storage
+name: backend-redis-storage
   spec:
-	accessModes:
-	- ReadWriteOnce
-	dataSource: null
-	resources:
+accessModes:
+- ReadWriteOnce
+dataSource: null
+resources:
   	requests:
  storage: 1Gi
   status: {}
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-	annotations:
+   annotations:
   	openshift.io/display-name: Backend Redis
-	creationTimestamp: null
-	labels:
+   creationTimestamp: null
+   labels:
   	app: ${APP_LABEL}
   	threescale_component: backend
-	name: backend-redis
+name: backend-redis
   spec:
-	lookupPolicy:
+lookupPolicy:
   	local: false
-	tags:
-	- annotations:
+tags:
+- annotations:
  openshift.io/display-name: Backend Redis (latest)
   	from:
  kind: ImageStreamTag
@@ -468,7 +468,7 @@ name: redis-config
   	name: latest
   	referencePolicy:
  type: ""
-	- annotations:
+- annotations:
  openshift.io/display-name: Backend ${AMP_RELEASE} Redis
   	from:
  kind: DockerImage
