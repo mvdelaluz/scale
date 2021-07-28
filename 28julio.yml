@@ -593,15 +593,15 @@ resources:
 - apiVersion: v1
   kind: Service
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
   	threescale_component_element: redis
-	name: system-redis
+name: system-redis
   spec:
-	ports:
-	- name: redis
+ports:
+- name: redis
   	port: 6379
   	protocol: TCP
   	targetPort: 6379
@@ -3239,10 +3239,10 @@ template:
    	path: service_discovery.yml
  	name: system
    name: system-config
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+test: false
+triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - check-svc
@@ -3252,26 +3252,26 @@ template:
    name: amp-system:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
   	threescale_component_element: sphinx
-	name: system-sphinx
+name: system-sphinx
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: system-sphinx
-	strategy:
+strategy:
   	resources: {}
   	rollingParams:
  intervalSeconds: 1
@@ -3280,7 +3280,7 @@ template:
  timeoutSeconds: 1200
  updatePeriodSeconds: 1
   	type: Rolling
-	template:
+template:
   	metadata:
  creationTimestamp: null
  labels:
@@ -3377,7 +3377,7 @@ template:
    - sh
    - -c
    - until $(curl --output /dev/null --silent --fail --head http://system-master:3000/status);
- 	do sleep $SLEEP_SECONDS; done
+ do sleep $SLEEP_SECONDS; done
    env:
    - name: SLEEP_SECONDS
  	value: "1"
@@ -3388,10 +3388,10 @@ template:
  volumes:
  - emptyDir: {}
    name: system-sphinx-database
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+test: false
+triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - system-master-svc
@@ -3401,189 +3401,189 @@ template:
    name: amp-system:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: v1
   kind: Secret
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system-events-hook
+name: system-events-hook
   stringData:
-	PASSWORD: ${SYSTEM_BACKEND_SHARED_SECRET}
-	URL: http://system-master:3000/master/events/import
+PASSWORD: ${SYSTEM_BACKEND_SHARED_SECRET}
+URL: http://system-master:3000/master/events/import
   type: Opaque
 - apiVersion: v1
   kind: Secret
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system-redis
+name: system-redis
   stringData:
-	MESSAGE_BUS_NAMESPACE: ${SYSTEM_MESSAGE_BUS_REDIS_NAMESPACE}
-	MESSAGE_BUS_SENTINEL_HOSTS: ""
-	MESSAGE_BUS_SENTINEL_ROLE: ""
-	MESSAGE_BUS_URL: ${SYSTEM_MESSAGE_BUS_REDIS_URL}
-	NAMESPACE: ${SYSTEM_REDIS_NAMESPACE}
-	SENTINEL_HOSTS: ""
-	SENTINEL_ROLE: ""
-	URL: ${SYSTEM_REDIS_URL}
+MESSAGE_BUS_NAMESPACE: ${SYSTEM_MESSAGE_BUS_REDIS_NAMESPACE}
+MESSAGE_BUS_SENTINEL_HOSTS: ""
+MESSAGE_BUS_SENTINEL_ROLE: ""
+MESSAGE_BUS_URL: ${SYSTEM_MESSAGE_BUS_REDIS_URL}
+NAMESPACE: ${SYSTEM_REDIS_NAMESPACE}
+SENTINEL_HOSTS: ""
+SENTINEL_ROLE: ""
+URL: ${SYSTEM_REDIS_URL}
   type: Opaque
 - apiVersion: v1
   kind: Secret
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system-master-apicast
+name: system-master-apicast
   stringData:
-	ACCESS_TOKEN: ${APICAST_ACCESS_TOKEN}
-	BASE_URL: http://${APICAST_ACCESS_TOKEN}@system-master:3000
-	PROXY_CONFIGS_ENDPOINT: http://${APICAST_ACCESS_TOKEN}@system-master:3000/master/api/proxy/configs
+ACCESS_TOKEN: ${APICAST_ACCESS_TOKEN}
+BASE_URL: http://${APICAST_ACCESS_TOKEN}@system-master:3000
+PROXY_CONFIGS_ENDPOINT: http://${APICAST_ACCESS_TOKEN}@system-master:3000/master/api/proxy/configs
   type: Opaque
 - apiVersion: v1
   kind: Secret
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system-seed
+name: system-seed
   stringData:
-	ADMIN_ACCESS_TOKEN: ${ADMIN_ACCESS_TOKEN}
-	ADMIN_EMAIL: ${ADMIN_EMAIL}
-	ADMIN_PASSWORD: ${ADMIN_PASSWORD}
-	ADMIN_USER: ${ADMIN_USERNAME}
-	MASTER_ACCESS_TOKEN: ${MASTER_ACCESS_TOKEN}
-	MASTER_DOMAIN: ${MASTER_NAME}
-	MASTER_PASSWORD: ${MASTER_PASSWORD}
-	MASTER_USER: ${MASTER_USER}
-	TENANT_NAME: ${TENANT_NAME}
+ADMIN_ACCESS_TOKEN: ${ADMIN_ACCESS_TOKEN}
+ADMIN_EMAIL: ${ADMIN_EMAIL}
+ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+ADMIN_USER: ${ADMIN_USERNAME}
+MASTER_ACCESS_TOKEN: ${MASTER_ACCESS_TOKEN}
+MASTER_DOMAIN: ${MASTER_NAME}
+MASTER_PASSWORD: ${MASTER_PASSWORD}
+MASTER_USER: ${MASTER_USER}
+TENANT_NAME: ${TENANT_NAME}
   type: Opaque
 - apiVersion: v1
   kind: Secret
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system-recaptcha
+name: system-recaptcha
   stringData:
-	PRIVATE_KEY: ${RECAPTCHA_PRIVATE_KEY}
-	PUBLIC_KEY: ${RECAPTCHA_PUBLIC_KEY}
+PRIVATE_KEY: ${RECAPTCHA_PRIVATE_KEY}
+PUBLIC_KEY: ${RECAPTCHA_PUBLIC_KEY}
   type: Opaque
 - apiVersion: v1
   kind: Secret
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system-app
+name: system-app
   stringData:
-	SECRET_KEY_BASE: ${SYSTEM_APP_SECRET_KEY_BASE}
+SECRET_KEY_BASE: ${SYSTEM_APP_SECRET_KEY_BASE}
   type: Opaque
 - apiVersion: v1
   kind: Secret
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system-memcache
+name: system-memcache
   stringData:
-	SERVERS: system-memcache:11211
+SERVERS: system-memcache:11211
   type: Opaque
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: Role
   metadata:
-	creationTimestamp: null
-	name: zync-que-role
+creationTimestamp: null
+name: zync-que-role
   rules:
   - apiGroups:
-	- apps.openshift.io
-	resources:
-	- deploymentconfigs
-	verbs:
-	- get
-	- list
+- apps.openshift.io
+resources:
+- deploymentconfigs
+verbs:
+- get
+- list
   - apiGroups:
-	- ""
-	resources:
-	- pods
-	- replicationcontrollers
-	verbs:
-	- get
-	- list
+- ""
+resources:
+- pods
+- replicationcontrollers
+verbs:
+- get
+- list
   - apiGroups:
-	- route.openshift.io
-	resources:
-	- routes
-	verbs:
-	- get
-	- list
-	- create
-	- delete
-	- patch
-	- update
+- route.openshift.io
+resources:
+- routes
+verbs:
+- get
+- list
+- create
+- delete
+- patch
+- update
   - apiGroups:
-	- route.openshift.io
-	resources:
-	- routes/status
-	verbs:
-	- get
+- route.openshift.io
+resources:
+- routes/status
+verbs:
+- get
   - apiGroups:
-	- route.openshift.io
-	resources:
-	- routes/custom-host
-	verbs:
-	- create
+- route.openshift.io
+resources:
+- routes/custom-host
+verbs:
+- create
 - apiVersion: v1
   imagePullSecrets:
   - name: threescale-registry-auth
   kind: ServiceAccount
   metadata:
-	creationTimestamp: null
-	name: zync-que-sa
+creationTimestamp: null
+name: zync-que-sa
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: RoleBinding
   metadata:
-	creationTimestamp: null
-	name: zync-que-rolebinding
+creationTimestamp: null
+name: zync-que-rolebinding
   roleRef:
-	apiGroup: rbac.authorization.k8s.io
-	kind: Role
-	name: zync-que-role
+apiGroup: rbac.authorization.k8s.io
+kind: Role
+name: zync-que-role
   subjects:
   - kind: ServiceAccount
-	name: zync-que-sa
+name: zync-que-sa
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	annotations:
+annotations:
   	prometheus.io/port: "9393"
   	prometheus.io/scrape: "true"
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: zync
-	name: zync
+name: zync
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: zync
-	strategy:
+strategy:
   	resources: {}
-	template:
+template:
   	metadata:
  creationTimestamp: null
  labels:
@@ -3671,10 +3671,10 @@ template:
    name: zync-db-svc
    resources: {}
  serviceAccountName: amp
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+test: false
+triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - zync-db-svc
@@ -3684,25 +3684,25 @@ template:
    name: amp-zync:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: zync
-	name: zync-que
+name: zync-que
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: zync-que
-	strategy:
+strategy:
   	resources: {}
   	rollingParams:
  intervalSeconds: 1
@@ -3711,7 +3711,7 @@ template:
  timeoutSeconds: 600
  updatePeriodSeconds: 1
   	type: Rolling
-	template:
+template:
   	metadata:
  annotations:
    prometheus.io/port: "9394"
@@ -3784,10 +3784,10 @@ template:
  restartPolicy: Always
  serviceAccountName: zync-que-sa
  terminationGracePeriodSeconds: 30
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+test: false
+triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - que
@@ -3796,29 +3796,29 @@ template:
    name: amp-zync:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: zync
   	threescale_component_element: database
-	name: zync-database
+name: zync-database
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: zync-database
-	strategy:
+strategy:
   	resources: {}
   	type: Recreate
-	template:
+template:
   	metadata:
  creationTimestamp: null
  labels:
@@ -3873,10 +3873,10 @@ template:
  volumes:
  - emptyDir: {}
    name: zync-database-data
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+test: false
+triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - postgresql
@@ -3885,77 +3885,77 @@ template:
    name: zync-database-postgresql:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: v1
   kind: Service
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: zync
-	name: zync
+name: zync
   spec:
-	ports:
-	- name: 8080-tcp
+ports:
+- name: 8080-tcp
   	port: 8080
   	protocol: TCP
   	targetPort: 8080
-	selector:
+selector:
   	deploymentConfig: zync
   status:
-	loadBalancer: {}
+loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: zync
   	threescale_component_element: database
-	name: zync-database
+name: zync-database
   spec:
-	ports:
-	- name: postgresql
+ports:
+- name: postgresql
   	port: 5432
   	protocol: TCP
   	targetPort: 5432
-	selector:
+selector:
   	deploymentConfig: zync-database
   status:
-	loadBalancer: {}
+loadBalancer: {}
 - apiVersion: v1
   kind: Secret
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: zync
-	name: zync
+name: zync
   stringData:
-	DATABASE_URL: postgresql://zync:${ZYNC_DATABASE_PASSWORD}@zync-database:5432/zync_production
-	SECRET_KEY_BASE: ${ZYNC_SECRET_KEY_BASE}
-	ZYNC_AUTHENTICATION_TOKEN: ${ZYNC_AUTHENTICATION_TOKEN}
-	ZYNC_DATABASE_PASSWORD: ${ZYNC_DATABASE_PASSWORD}
+DATABASE_URL: postgresql://zync:${ZYNC_DATABASE_PASSWORD}@zync-database:5432/zync_production
+SECRET_KEY_BASE: ${ZYNC_SECRET_KEY_BASE}
+ZYNC_AUTHENTICATION_TOKEN: ${ZYNC_AUTHENTICATION_TOKEN}
+ZYNC_DATABASE_PASSWORD: ${ZYNC_DATABASE_PASSWORD}
   type: Opaque
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: apicast
   	threescale_component_element: staging
-	name: apicast-staging
+name: apicast-staging
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: apicast-staging
-	strategy:
+strategy:
   	resources: {}
   	rollingParams:
  intervalSeconds: 1
@@ -3964,7 +3964,7 @@ template:
  timeoutSeconds: 1800
  updatePeriodSeconds: 1
   	type: Rolling
-	template:
+template:
   	metadata:
  annotations:
    prometheus.io/port: "9421"
@@ -4042,10 +4042,10 @@ template:
    	cpu: 50m
    	memory: 64Mi
  serviceAccountName: amp
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+test: false
+triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - apicast-staging
@@ -4054,26 +4054,26 @@ template:
    name: amp-apicast:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: apicast
   	threescale_component_element: production
-	name: apicast-production
+name: apicast-production
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: apicast-production
-	strategy:
+strategy:
   	resources: {}
   	rollingParams:
  intervalSeconds: 1
@@ -4082,7 +4082,7 @@ template:
  timeoutSeconds: 1800
  updatePeriodSeconds: 1
   	type: Rolling
-	template:
+template:
   	metadata:
  annotations:
    prometheus.io/port: "9421"
@@ -4164,7 +4164,7 @@ template:
    - sh
    - -c
    - until $(curl --output /dev/null --silent --fail --head http://system-master:3000/status);
- 	do sleep $SLEEP_SECONDS; done
+ do sleep $SLEEP_SECONDS; done
    env:
    - name: SLEEP_SECONDS
  	value: "1"
@@ -4172,10 +4172,10 @@ template:
    name: system-master-svc
    resources: {}
  serviceAccountName: amp
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+test: false
+triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - system-master-svc
@@ -4185,70 +4185,70 @@ template:
    name: amp-apicast:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: v1
   kind: Service
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: apicast
   	threescale_component_element: staging
-	name: apicast-staging
+name: apicast-staging
   spec:
-	ports:
-	- name: gateway
+ports:
+- name: gateway
   	port: 8080
   	protocol: TCP
   	targetPort: 8080
-	- name: management
+- name: management
   	port: 8090
   	protocol: TCP
   	targetPort: 8090
-	selector:
+selector:
   	deploymentConfig: apicast-staging
   status:
-	loadBalancer: {}
+loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: apicast
   	threescale_component_element: production
-	name: apicast-production
+name: apicast-production
   spec:
-	ports:
-	- name: gateway
+ports:
+- name: gateway
   	port: 8080
   	protocol: TCP
   	targetPort: 8080
-	- name: management
+- name: management
   	port: 8090
   	protocol: TCP
   	targetPort: 8090
-	selector:
+selector:
   	deploymentConfig: apicast-production
   status:
-	loadBalancer: {}
+loadBalancer: {}
 - apiVersion: v1
   data:
-	APICAST_MANAGEMENT_API: ${APICAST_MANAGEMENT_API}
-	APICAST_RESPONSE_CODES: ${APICAST_RESPONSE_CODES}
-	OPENSSL_VERIFY: ${APICAST_OPENSSL_VERIFY}
+APICAST_MANAGEMENT_API: ${APICAST_MANAGEMENT_API}
+APICAST_RESPONSE_CODES: ${APICAST_RESPONSE_CODES}
+OPENSSL_VERIFY: ${APICAST_OPENSSL_VERIFY}
   kind: ConfigMap
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: apicast
-	name: apicast-environment
+name: apicast-environment
 parameters:
 - description: AMP release tag.
   name: AMP_RELEASE
