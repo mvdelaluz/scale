@@ -59,11 +59,11 @@ objects:
   	threescale_component: zync
      name: amp-zync
   spec:
-	lookupPolicy:
-  	local: false
-	tags:
-	- annotations:
- openshift.io/display-name: AMP Zync (latest)
+    lookupPolicy:
+      local: false
+    tags:  
+    - annotations:
+        openshift.io/display-name: AMP Zync (latest)
   	from:
  kind: ImageStreamTag
  name: ${AMP_RELEASE}
