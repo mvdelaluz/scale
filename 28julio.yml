@@ -376,34 +376,34 @@ labels:
   	app: ${APP_LABEL}
   	threescale_component: backend
   	threescale_component_element: redis
-	name: backend-redis
+name: backend-redis
   spec:
-	ports:
-	- port: 6379
+ports:
+- port: 6379
   	protocol: TCP
   	targetPort: 6379
-	selector:
+selector:
   	deploymentConfig: backend-redis
   status:
-	loadBalancer: {}
+loadBalancer: {}
 - apiVersion: v1
   data:
-	redis.conf: |
-  	protected-mode no
-  	port 6379
-  	timeout 0
-  	tcp-keepalive 300
-  	daemonize no
-  	supervised no
-  	loglevel notice
-  	databases 16
-  	save 900 1
-  	save 300 10
-  	save 60 10000
-  	stop-writes-on-bgsave-error yes
-  	rdbcompression yes
-  	rdbchecksum yes
-  	dbfilename dump.rdb
+  redis.conf: |
+  protected-mode no
+  port 6379
+  timeout 0
+  tcp-keepalive 300
+  daemonize no
+  supervised no
+  loglevel notice
+  databases 16
+  save 900 1
+  save 300 10
+  save 60 10000
+  stop-writes-on-bgsave-error yes
+  rdbcompression yes
+  rdbchecksum yes
+  dbfilename dump.rdb
   	slave-serve-stale-data yes
   	slave-read-only yes
   	repl-diskless-sync no
@@ -426,7 +426,7 @@ labels:
   	app: ${APP_LABEL}
   	threescale_component: system
   	threescale_component_element: redis
-	name: redis-config
+name: redis-config
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
