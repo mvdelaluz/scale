@@ -17,15 +17,15 @@ objects:
     annotations:
       openshift.io/display-name: AMP backend
     creationTimestamp: null
-		labels:
+labels:
   	  app: ${APP_LABEL}
   	  threescale_component: backend
-	name: amp-backend
+name: amp-backend
   spec:
-	lookupPolicy:
+lookupPolicy:
   	local: false
-	tags:
-	- annotations:
+tags:
+- annotations:
  openshift.io/display-name: amp-backend (latest)
   	from:
  kind: ImageStreamTag
@@ -35,7 +35,7 @@ objects:
   	name: latest
   	referencePolicy:
  type: ""
-	- annotations:
+- annotations:
  openshift.io/display-name: amp-backend ${AMP_RELEASE}
   	from:
  kind: DockerImage
@@ -47,22 +47,22 @@ objects:
   	referencePolicy:
  type: ""
   status:
-	dockerImageRepository: ""
+dockerImageRepository: ""
   - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-	annotations:
+  annotations:
   	openshift.io/display-name: AMP Zync
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: zync
-	name: amp-zync
+name: amp-zync
   spec:
-	lookupPolicy:
+lookupPolicy:
   	local: false
-	tags:
-	- annotations:
+tags:
+- annotations:
  openshift.io/display-name: AMP Zync (latest)
   	from:
  kind: ImageStreamTag
@@ -72,7 +72,7 @@ objects:
   	name: latest
   	referencePolicy:
  type: ""
-	- annotations:
+- annotations:
  openshift.io/display-name: AMP Zync ${AMP_RELEASE}
   	from:
  kind: DockerImage
@@ -84,19 +84,19 @@ objects:
   	referencePolicy:
  type: ""
   status:
-	dockerImageRepository: ""
+dockerImageRepository: ""
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-	annotations:
+annotations:
   	openshift.io/display-name: AMP APIcast
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: apicast
-	name: amp-apicast
+name: amp-apicast
   spec:
-	lookupPolicy:
+lookupPolicy:
   	local: false
     tags:
     - annotations:
