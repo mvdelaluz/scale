@@ -22,17 +22,17 @@ objects:
       threescale_component: backend
     name: amp-backend
   spec:
-	lookupPolicy:
-  	local: false
-	tags:
-	- annotations:
- openshift.io/display-name: amp-backend (latest)
-  	from:
- kind: ImageStreamTag
- name: ${AMP_RELEASE}
-  	generation: null
-  	importPolicy: {}
-  	name: latest
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/display-name: amp-backend (latest)
+      from:
+        kind: ImageStreamTag
+        name: ${AMP_RELEASE}
+      generation: null
+      importPolicy: {}
+      name: latest
   	referencePolicy:
  type: ""
 	- annotations:
