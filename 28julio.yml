@@ -290,10 +290,10 @@ name: backend-redis
 replicas: 1
 selector:
   	deploymentConfig: backend-redis
-	strategy:
+strategy:
   	resources: {}
   	type: Recreate
-	template:
+template:
   	metadata:
  creationTimestamp: null
  labels:
@@ -350,10 +350,10 @@ selector:
    	path: redis.conf
  	name: redis-config
    name: redis-config
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+   test: false
+   triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - backend-redis
@@ -362,17 +362,17 @@ selector:
    name: backend-redis:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: v1
   kind: Service
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: backend
   	threescale_component_element: redis
