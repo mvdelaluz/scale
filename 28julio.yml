@@ -238,8 +238,8 @@ name: system-memcached
   - name: threescale-registry-auth
   kind: ServiceAccount
   metadata:
-	creationTimestamp: null
-	name: amp
+creationTimestamp: null
+name: amp
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
@@ -605,25 +605,25 @@ resources:
   	port: 6379
   	protocol: TCP
   	targetPort: 6379
-	selector:
+selector:
   	deploymentConfig: system-redis
   status:
-	loadBalancer: {}
+loadBalancer: {}
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-	annotations:
+annotations:
   	openshift.io/display-name: System Redis
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system-redis
+name: system-redis
   spec:
-	lookupPolicy:
+lookupPolicy:
   	local: false
-	tags:
-	- annotations:
+tags:
+- annotations:
  openshift.io/display-name: System Redis (latest)
   	from:
  kind: ImageStreamTag
@@ -633,7 +633,7 @@ resources:
   	name: latest
   	referencePolicy:
  type: ""
-	- annotations:
+- annotations:
  openshift.io/display-name: System ${AMP_RELEASE} Redis
   	from:
  kind: DockerImage
@@ -645,21 +645,21 @@ resources:
   	referencePolicy:
  type: ""
   status:
-	dockerImageRepository: ""
+dockerImageRepository: ""
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: backend
   	threescale_component_element: cron
-	name: backend-cron
+name: backend-cron
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: backend-cron
-	strategy:
+strategy:
   	resources: {}
   	rollingParams:
  intervalSeconds: 1
@@ -668,7 +668,7 @@ resources:
  timeoutSeconds: 1200
  updatePeriodSeconds: 1
   	type: Rolling
-	template:
+template:
   	metadata:
  creationTimestamp: null
  labels:
@@ -732,7 +732,7 @@ resources:
    - sh
    - -c
    - until rake connectivity:redis_storage_queue_check; do sleep $SLEEP_SECONDS;
- 	done
+ done
    env:
    - name: CONFIG_REDIS_PROXY
  	valueFrom:
@@ -775,10 +775,10 @@ resources:
    name: backend-redis-svc
    resources: {}
  serviceAccountName: amp
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+test: false
+triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - backend-redis-svc
@@ -788,26 +788,26 @@ resources:
    name: amp-backend:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: backend
   	threescale_component_element: listener
-	name: backend-listener
+name: backend-listener
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: backend-listener
-	strategy:
+strategy:
   	resources: {}
   	rollingParams:
  intervalSeconds: 1
@@ -816,7 +816,7 @@ resources:
  timeoutSeconds: 600
  updatePeriodSeconds: 1
   	type: Rolling
-	template:
+template:
   	metadata:
  creationTimestamp: null
  labels:
@@ -908,10 +908,10 @@ resources:
    	cpu: 500m
    	memory: 550Mi
  serviceAccountName: amp
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+test: false
+triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - backend-listener
@@ -920,47 +920,47 @@ resources:
    name: amp-backend:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: v1
   kind: Service
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: backend
   	threescale_component_element: listener
-	name: backend-listener
+name: backend-listener
   spec:
-	ports:
-	- name: http
+ports:
+- name: http
   	port: 3000
   	protocol: TCP
   	targetPort: 3000
-	selector:
+selector:
   	deploymentConfig: backend-listener
   status:
-	loadBalancer: {}
+loadBalancer: {}
 - apiVersion: route.openshift.io/v1
   kind: Route
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: backend
-	name: backend
+name: backend
   spec:
-	host: backend-${TENANT_NAME}.${WILDCARD_DOMAIN}
-	port:
+host: backend-${TENANT_NAME}.${WILDCARD_DOMAIN}
+port:
   	targetPort: http
-	tls:
+tls:
   	insecureEdgeTerminationPolicy: Allow
   	termination: edge
-	to:
+to:
   	kind: Service
   	name: backend-listener
   	weight: null
