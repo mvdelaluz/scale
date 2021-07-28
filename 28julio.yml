@@ -480,24 +480,24 @@ tags:
   	referencePolicy:
  type: ""
   status:
-	dockerImageRepository: ""
+dockerImageRepository: ""
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
   	threescale_component_element: redis
-	name: system-redis
+name: system-redis
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: system-redis
-	strategy:
+strategy:
   	resources: {}
   	type: Recreate
-	template:
+template:
   	metadata:
  creationTimestamp: null
  labels:
@@ -555,10 +555,10 @@ tags:
    	path: redis.conf
  	name: redis-config
    name: redis-config
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+test: false
+triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - system-redis
@@ -567,27 +567,27 @@ tags:
    name: system-redis:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
   	threescale_component_element: redis
-	name: system-redis-storage
+name: system-redis-storage
   spec:
-	accessModes:
-	- ReadWriteOnce
-	dataSource: null
-	resources:
-  	requests:
+accessModes:
+- ReadWriteOnce
+dataSource: null
+resources:
+  requests:
  storage: 1Gi
   status: {}
 - apiVersion: v1
