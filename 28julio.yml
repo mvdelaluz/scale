@@ -96,10 +96,10 @@ tags:
      threescale_component: apicast
     name: amp-apicast
   spec:
-	lookupPolicy:
+    lookupPolicy:
   	local: false
-	tags:
-	- annotations:
+    tags:
+    - annotations:
  openshift.io/display-name: AMP APIcast (latest)
   	from:
  kind: ImageStreamTag
@@ -109,7 +109,7 @@ tags:
   	name: latest
   	referencePolicy:
  type: ""
-	- annotations:
+- annotations:
  openshift.io/display-name: AMP APIcast ${AMP_RELEASE}
   	from:
  kind: DockerImage
@@ -121,7 +121,7 @@ tags:
   	referencePolicy:
  type: ""
   status:
-	dockerImageRepository: ""
+    dockerImageRepository: ""
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
