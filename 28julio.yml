@@ -183,7 +183,7 @@ tags:
   	name: latest
   	referencePolicy:
  type: ""
-	- annotations:
+ - annotations:
  openshift.io/display-name: Zync ${AMP_RELEASE} PostgreSQL
   	from:
  kind: DockerImage
@@ -195,22 +195,22 @@ tags:
   	referencePolicy:
  type: ""
   status:
-	dockerImageRepository: ""
+  dockerImageRepository: ""
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-	annotations:
+  annotations:
   	openshift.io/display-name: System Memcached
-	creationTimestamp: null
-	labels:
+    creationTimestamp: null
+    labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system-memcached
+name: system-memcached
   spec:
-	lookupPolicy:
+  lookupPolicy:
   	local: false
-	tags:
-	- annotations:
+   tags:
+- annotations:
  openshift.io/display-name: System Memcached (latest)
   	from:
  kind: ImageStreamTag
@@ -220,7 +220,7 @@ tags:
   	name: latest
   	referencePolicy:
  type: ""
-	- annotations:
+- annotations:
  openshift.io/display-name: System ${AMP_RELEASE} Memcached
   	from:
  kind: DockerImage
@@ -232,7 +232,7 @@ tags:
   	referencePolicy:
  type: ""
   status:
-	dockerImageRepository: ""
+    dockerImageRepository: ""
 - apiVersion: v1
   imagePullSecrets:
   - name: threescale-registry-auth
@@ -243,18 +243,18 @@ tags:
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-	annotations:
+annotations:
   	openshift.io/display-name: System MySQL
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system-mysql
+name: system-mysql
   spec:
-	lookupPolicy:
+lookupPolicy:
   	local: false
-	tags:
-	- annotations:
+tags:
+- annotations:
  openshift.io/display-name: System MySQL (latest)
   	from:
  kind: ImageStreamTag
@@ -264,7 +264,7 @@ tags:
   	name: latest
   	referencePolicy:
  type: ""
-	- annotations:
+- annotations:
  openshift.io/display-name: System ${AMP_RELEASE} MySQL
   	from:
  kind: DockerImage
@@ -276,19 +276,19 @@ tags:
   	referencePolicy:
  type: ""
   status:
-	dockerImageRepository: ""
+dockerImageRepository: ""
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: backend
   	threescale_component_element: redis
-	name: backend-redis
+name: backend-redis
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: backend-redis
 	strategy:
   	resources: {}
