@@ -125,18 +125,18 @@ tags:
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-	annotations:
+    annotations:
   	openshift.io/display-name: AMP System
-	creationTimestamp: null
-	labels:
+    creationTimestamp: null
+    labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: amp-system
+    name: amp-system
   spec:
-	lookupPolicy:
+    lookupPolicy:
   	local: false
-	tags:
-	- annotations:
+    tags:
+    - annotations:
  openshift.io/display-name: AMP System (latest)
   	from:
  kind: ImageStreamTag
@@ -146,7 +146,7 @@ tags:
   	name: latest
   	referencePolicy:
  type: ""
-	- annotations:
+    - annotations:
  openshift.io/display-name: AMP system ${AMP_RELEASE}
   	from:
  kind: DockerImage
@@ -158,11 +158,11 @@ tags:
   	referencePolicy:
  type: ""
   status:
-	dockerImageRepository: ""
+    dockerImageRepository: ""
 - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-	annotations:
+    annotations:
   	openshift.io/display-name: Zync database PostgreSQL
 	creationTimestamp: null
 	labels:
