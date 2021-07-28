@@ -46,14 +46,14 @@ from:
  name: ${AMP_RELEASE}
  referencePolicy:
  type: ""
-  status:
-	dockerImageRepository: ""
+ status:
+   dockerImageRepository: ""
   - apiVersion: image.openshift.io/v1
   kind: ImageStream
   metadata:
-	annotations:
-  	openshift.io/display-name: AMP Zync
-	creationTimestamp: null
+    annotations:
+      openshift.io/display-name: AMP Zync
+      creationTimestamp: null
 	labels:
   	app: ${APP_LABEL}
   	threescale_component: zync
