@@ -165,7 +165,7 @@ tags:
     annotations:
     openshift.io/display-name: Zync database PostgreSQL
     creationTimestamp: null
-	labels:
+    labels:
   	app: ${APP_LABEL}
   	threescale_component: system
     name: zync-database-postgresql
@@ -173,7 +173,7 @@ tags:
      lookupPolicy:
      local: false
      tags:
-	- annotations:
+     - annotations:
  openshift.io/display-name: Zync PostgreSQL (latest)
   	from:
  kind: ImageStreamTag
