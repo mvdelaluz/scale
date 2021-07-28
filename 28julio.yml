@@ -965,19 +965,19 @@ to:
   	name: backend-listener
   	weight: null
   status:
-	ingress: null
+ingress: null
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: backend
   	threescale_component_element: worker
-	name: backend-worker
+name: backend-worker
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: backend-worker
 	strategy:
   	resources: {}
