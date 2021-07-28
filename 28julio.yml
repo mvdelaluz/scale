@@ -89,12 +89,12 @@ tags:
   kind: ImageStream
   metadata:
     annotations:
-  	openshift.io/display-name: AMP APIcast
-	creationTimestamp: null
-	labels:
-  	app: ${APP_LABEL}
-  	threescale_component: apicast
-	name: amp-apicast
+  openshift.io/display-name: AMP APIcast
+    creationTimestamp: null
+  labels:
+     app: ${APP_LABEL}
+     threescale_component: apicast
+    name: amp-apicast
   spec:
 	lookupPolicy:
   	local: false
