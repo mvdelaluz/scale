@@ -154,7 +154,7 @@ tags:
   	generation: null
   	importPolicy:
  insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
-  	name: ${AMP_RELEASE}
+  name: ${AMP_RELEASE}
   	referencePolicy:
  type: ""
   status:
@@ -168,11 +168,11 @@ tags:
 	labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: zync-database-postgresql
+    name: zync-database-postgresql
   spec:
-	lookupPolicy:
-  	local: false
-	tags:
+     lookupPolicy:
+     local: false
+     tags:
 	- annotations:
  openshift.io/display-name: Zync PostgreSQL (latest)
   	from:
