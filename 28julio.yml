@@ -1524,46 +1524,46 @@ loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
   	threescale_component_element: sphinx
-	name: system-sphinx
+name: system-sphinx
   spec:
-	ports:
-	- name: sphinx
+ports:
+- name: sphinx
   	port: 9306
   	protocol: TCP
   	targetPort: 9306
-	selector:
+selector:
   	deploymentConfig: system-sphinx
   status:
-	loadBalancer: {}
+loadBalancer: {}
 - apiVersion: v1
   kind: Service
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
   	threescale_component_element: memcache
-	name: system-memcache
+name: system-memcache
   spec:
-	ports:
-	- name: memcache
+ports:
+- name: memcache
   	port: 11211
   	protocol: TCP
   	targetPort: 11211
-	selector:
+selector:
   	deploymentConfig: system-memcache
   status:
-	loadBalancer: {}
+loadBalancer: {}
 - apiVersion: v1
   data:
-	rolling_updates.yml: |
+rolling_updates.yml: |
   	production: {}
-	service_discovery.yml: |
+service_discovery.yml: |
   	production:
  enabled: <%= cluster_token_file_exists = File.exists?(cluster_token_file_path = '/var/run/secrets/kubernetes.io/serviceaccount/token') %>
  server_scheme: 'https'
@@ -1578,7 +1578,7 @@ loadBalancer: {}
  open_timeout: 1
  max_retry: 5
  verify_ssl: <%= OpenSSL::SSL::VERIFY_NONE %> # 0
-	zync.yml: |
+zync.yml: |
   	production:
  endpoint: 'http://zync:8080'
  authentication:
@@ -1589,62 +1589,62 @@ loadBalancer: {}
  root_url:
   kind: ConfigMap
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system
+name: system
 - apiVersion: v1
   kind: Secret
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
   	threescale_component_element: smtp
-	name: system-smtp
+name: system-smtp
   stringData:
-	address: ""
-	authentication: ""
-	domain: ""
-	openssl.verify.mode: ""
-	password: ""
-	port: ""
-	username: ""
+address: ""
+authentication: ""
+domain: ""
+openssl.verify.mode: ""
+password: ""
+port: ""
+username: ""
 - apiVersion: v1
   data:
-	AMP_RELEASE: ${AMP_RELEASE}
-	APICAST_REGISTRY_URL: ${APICAST_REGISTRY_URL}
-	FORCE_SSL: "true"
-	PROVIDER_PLAN: enterprise
-	RAILS_ENV: production
-	RAILS_LOG_LEVEL: info
-	RAILS_LOG_TO_STDOUT: "true"
-	SSL_CERT_DIR: /etc/pki/tls/certs
-	THINKING_SPHINX_PORT: "9306"
-	THREESCALE_SANDBOX_PROXY_OPENSSL_VERIFY_MODE: VERIFY_NONE
-	THREESCALE_SUPERDOMAIN: ${WILDCARD_DOMAIN}
+AMP_RELEASE: ${AMP_RELEASE}
+APICAST_REGISTRY_URL: ${APICAST_REGISTRY_URL}
+FORCE_SSL: "true"
+PROVIDER_PLAN: enterprise
+RAILS_ENV: production
+RAILS_LOG_LEVEL: info
+RAILS_LOG_TO_STDOUT: "true"
+SSL_CERT_DIR: /etc/pki/tls/certs
+THINKING_SPHINX_PORT: "9306"
+THREESCALE_SANDBOX_PROXY_OPENSSL_VERIFY_MODE: VERIFY_NONE
+THREESCALE_SUPERDOMAIN: ${WILDCARD_DOMAIN}
   kind: ConfigMap
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
-	name: system-environment
+name: system-environment
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
   	threescale_component_element: app
-	name: system-app
+name: system-app
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: system-app
-	strategy:
+strategy:
   	resources: {}
   	rollingParams:
  intervalSeconds: 1
@@ -1926,7 +1926,7 @@ loadBalancer: {}
  timeoutSeconds: 1200
  updatePeriodSeconds: 1
   	type: Rolling
-	template:
+template:
   	metadata:
  creationTimestamp: null
  labels:
@@ -2845,10 +2845,10 @@ loadBalancer: {}
    	path: service_discovery.yml
  	name: system
    name: system-config
-	test: false
-	triggers:
-	- type: ConfigChange
-	- imageChangeParams:
+test: false
+triggers:
+- type: ConfigChange
+- imageChangeParams:
  automatic: true
  containerNames:
  - system-provider
@@ -2859,26 +2859,26 @@ loadBalancer: {}
    name: amp-system:latest
   	type: ImageChange
   status:
-	availableReplicas: 0
-	latestVersion: 0
-	observedGeneration: 0
-	replicas: 0
-	unavailableReplicas: 0
-	updatedReplicas: 0
+availableReplicas: 0
+latestVersion: 0
+observedGeneration: 0
+replicas: 0
+unavailableReplicas: 0
+updatedReplicas: 0
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
-	creationTimestamp: null
-	labels:
+creationTimestamp: null
+labels:
   	app: ${APP_LABEL}
   	threescale_component: system
   	threescale_component_element: sidekiq
-	name: system-sidekiq
+name: system-sidekiq
   spec:
-	replicas: 1
-	selector:
+replicas: 1
+selector:
   	deploymentConfig: system-sidekiq
-	strategy:
+strategy:
   	resources: {}
   	rollingParams:
  intervalSeconds: 1
@@ -2887,7 +2887,7 @@ loadBalancer: {}
  timeoutSeconds: 1200
  updatePeriodSeconds: 1
   	type: Rolling
-	template:
+template:
   	metadata:
  creationTimestamp: null
  labels:
@@ -3173,8 +3173,8 @@ loadBalancer: {}
    - bash
    - -c
    - bundle exec sh -c "until rake boot:redis && curl --output /dev/null --silent
- 	--fail --head http://system-master:3000/status; do sleep $SLEEP_SECONDS;
- 	done"
+ --fail --head http://system-master:3000/status; do sleep $SLEEP_SECONDS;
+ done"
    env:
    - name: REDIS_URL
  	valueFrom:
