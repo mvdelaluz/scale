@@ -11,90 +11,90 @@ metadata:
   creationTimestamp: null
   name: 3scale-api-management
 objects:
- - apiVersion: image.openshift.io/v1
-   kind: ImageStream
-   metadata:
-     annotations:
-       openshift.io/display-name: AMP backend
-     creationTimestamp: null
-   labels:
-     app: ${APP_LABEL}
-     threescale_component: backend
-   name: amp-backend
-   spec:
-     lookupPolicy:
-       local: false
-   tags:
- - annotations:
-     openshift.io/display-name: amp-backend (latest)
-   from:
-     kind: ImageStreamTag
-     name: ${AMP_RELEASE}
-   generation: null
-   importPolicy: {}
-   name: latest
-   referencePolicy:
-     type: ""
- - annotations:
-     openshift.io/display-name: amp-backend ${AMP_RELEASE}
-   from:
-     kind: DockerImage
-     name: ${AMP_BACKEND_IMAGE}
-   generation: null
-   importPolicy:
-     insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
-   name: ${AMP_RELEASE}
-   referencePolicy:
-     type: ""
-   status:
-     dockerImageRepository: ""
- - apiVersion: image.openshift.io/v1
-   kind: ImageStream
-   metadata:
-   annotations:
-     openshift.io/display-name: AMP Zync
-   creationTimestamp: null
-   labels:
-     app: ${APP_LABEL}
-     threescale_component: zync
-   name: amp-zync
-spec:
-  lookupPolicy:
-    local: false
-  tags:
-  - annotations:
-      openshift.io/display-name: AMP Zync (latest)
-    from:
-      kind: ImageStreamTag
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/display-name: AMP backend
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: backend
+    name: amp-backend
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/display-name: amp-backend (latest)
+      from:
+        kind: ImageStreamTag
+        name: ${AMP_RELEASE}
+      generation: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: ""
+    - annotations:
+        openshift.io/display-name: amp-backend ${AMP_RELEASE}
+      from:
+        kind: DockerImage
+        name: ${AMP_BACKEND_IMAGE}
+      generation: null
+      importPolicy:
+        insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
       name: ${AMP_RELEASE}
-    generation: null
-    importPolicy: {}
-    name: latest
-    referencePolicy:
-      type: ""
-  - annotations:
-      openshift.io/display-name: AMP Zync ${AMP_RELEASE}
-    from:
-      kind: DockerImage
-      name: ${AMP_ZYNC_IMAGE}
-    generation: null
-    importPolicy:
-      insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
-    name: ${AMP_RELEASE}
-    referencePolicy:
-      type: ""
+      referencePolicy:
+        type: ""
+  status:
+    dockerImageRepository: ""
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/display-name: AMP Zync
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: zync
+    name: amp-zync
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/display-name: AMP Zync (latest)
+      from:
+        kind: ImageStreamTag
+        name: ${AMP_RELEASE}
+      generation: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: ""
+    - annotations:
+        openshift.io/display-name: AMP Zync ${AMP_RELEASE}
+      from:
+        kind: DockerImage
+        name: ${AMP_ZYNC_IMAGE}
+      generation: null
+      importPolicy:
+        insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
+      name: ${AMP_RELEASE}
+      referencePolicy:
+        type: ""
     status:
       dockerImageRepository: ""
-  - apiVersion: image.openshift.io/v1
-    kind: ImageStream
-    metadata:
-      annotations:
-        openshift.io/display-name: AMP APIcast
-      creationTimestamp: null
-      labels:
-        app: ${APP_LABEL}
-        threescale_component: apicast
-      name: amp-apicast
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/display-name: AMP APIcast
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: apicast
+    name: amp-apicast
   spec:
     lookupPolicy:
       local: false
@@ -120,11 +120,11 @@ spec:
       name: ${AMP_RELEASE}
       referencePolicy:
         type: ""
-      status:
-        dockerImageRepository: ""
+  status:
+    dockerImageRepository: ""
 - apiVersion: image.openshift.io/v1
-    kind: ImageStream
-    metadata:
+  kind: ImageStream
+  metadata:
     annotations:
       openshift.io/display-name: AMP System
     creationTimestamp: null
@@ -132,9 +132,9 @@ spec:
       app: ${APP_LABEL}
       threescale_component: system
     name: amp-system
- spec:
-   lookupPolicy:
-     local: false
+  spec:
+    lookupPolicy:
+      local: false
     tags:
     - annotations:
         openshift.io/display-name: AMP System (latest)
@@ -146,72 +146,35 @@ spec:
       name: latest
       referencePolicy:
         type: ""
-     - annotations:
-         openshift.io/display-name: AMP system ${AMP_RELEASE}
-       from:
-         kind: DockerImage
-         name: ${AMP_SYSTEM_IMAGE}
-       generation: null
-       importPolicy:
-         insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
-       name: ${AMP_RELEASE}
-       referencePolicy:
-         type: ""
-       status:
-         dockerImageRepository: ""
- - apiVersion: image.openshift.io/v1
-   kind: ImageStream
-   metadata:
-   annotations:
-     openshift.io/display-name: Zync database PostgreSQL
-      creationTimestamp: null
-      labels:
-        app: ${APP_LABEL}
-        threescale_component: system
-      name: zync-database-postgresql
-    spec:
-       lookupPolicy:
-         local: false
-       tags:
-       - annotations:
-           openshift.io/display-name: Zync PostgreSQL (latest)
-         from:
-           kind: ImageStreamTag
-           name: ${AMP_RELEASE}
-         generation: null
-         importPolicy: {}
-         name: latest
-         referencePolicy:
-           type: ""
-       - annotations:
-        openshift.io/display-name: Zync ${AMP_RELEASE} PostgreSQL
+    - annotations:
+        openshift.io/display-name: AMP system ${AMP_RELEASE}
       from:
         kind: DockerImage
-        name: ${ZYNC_DATABASE_IMAGE}
+        name: ${AMP_SYSTEM_IMAGE}
       generation: null
       importPolicy:
         insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
       name: ${AMP_RELEASE}
       referencePolicy:
         type: ""
-   status:
-   dockerImageRepository: ""
- - apiVersion: image.openshift.io/v1
-   kind: ImageStream
-   metadata:
-   annotations:
-     openshift.io/display-name: System Memcached
-     creationTimestamp: null
-     labels:
-       app: ${APP_LABEL}
-       threescale_component: system
-   name: system-memcached
-   spec:
+  status:
+    dockerImageRepository: ""
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/display-name: Zync database PostgreSQL
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: system
+    name: zync-database-postgresql
+  spec:
      lookupPolicy:
        local: false
      tags:
      - annotations:
-         openshift.io/display-name: System Memcached (latest)
+         openshift.io/display-name: Zync PostgreSQL (latest)
        from:
          kind: ImageStreamTag
          name: ${AMP_RELEASE}
@@ -221,16 +184,53 @@ spec:
        referencePolicy:
          type: ""
      - annotations:
-         openshift.io/display-name: System ${AMP_RELEASE} Memcached
+         openshift.io/display-name: Zync ${AMP_RELEASE} PostgreSQL
        from:
-         kind: DockerImage
-         name: ${MEMCACHED_IMAGE}
+          kind: DockerImage
+          name: ${ZYNC_DATABASE_IMAGE}
        generation: null
        importPolicy:
          insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
        name: ${AMP_RELEASE}
        referencePolicy:
          type: ""
+  status:
+    dockerImageRepository: ""
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/display-name: System Memcached
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: system
+    name: system-memcached
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/display-name: System Memcached (latest)
+      from:
+        kind: ImageStreamTag
+        name: ${AMP_RELEASE}
+      generation: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: ""
+    - annotations:
+        openshift.io/display-name: System ${AMP_RELEASE} Memcached
+      from:
+        kind: DockerImage
+        name: ${MEMCACHED_IMAGE}
+      generation: null
+      importPolicy:
+        insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
+      name: ${AMP_RELEASE}
+      referencePolicy:
+        type: ""
      status:
        dockerImageRepository: ""
  - apiVersion: v1
