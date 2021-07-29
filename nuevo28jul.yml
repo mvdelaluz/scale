@@ -231,110 +231,110 @@ objects:
       name: ${AMP_RELEASE}
       referencePolicy:
         type: ""
-     status:
-       dockerImageRepository: ""
- - apiVersion: v1
-   imagePullSecrets:
-   - name: threescale-registry-auth
-   kind: ServiceAccount
-   metadata:
-   creationTimestamp: null
-   name: amp
- - apiVersion: image.openshift.io/v1
-   kind: ImageStream
-   metadata:
-   annotations:
-     openshift.io/display-name: System MySQL
-   creationTimestamp: null
-   labels:
-     app: ${APP_LABEL}
-     threescale_component: system
-   name: system-mysql
-   spec:
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  imagePullSecrets:
+  - name: threescale-registry-auth
+  kind: ServiceAccount
+  metadata:
+    creationTimestamp: null
+    name: amp
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/display-name: System MySQL
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: system
+    name: system-mysql
+  spec:
      lookupPolicy:
        local: false
-   tags:
- - annotations:
-     openshift.io/display-name: System MySQL (latest)
-   from:
-     kind: ImageStreamTag
-     name: ${AMP_RELEASE}
-   generation: null
-   importPolicy: {}
-   name: latest
-   referencePolicy:
-     type: ""
- - annotations:
-     openshift.io/display-name: System ${AMP_RELEASE} MySQL
-   from:
-     kind: DockerImage
-     name: ${SYSTEM_DATABASE_IMAGE}
-   generation: null
-   importPolicy:
-     insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
-   name: ${AMP_RELEASE}
-   referencePolicy:
-     type: ""
- status:
-   dockerImageRepository: ""
- - apiVersion: apps.openshift.io/v1
-   kind: DeploymentConfig
-   metadata:
-   creationTimestamp: null
-   labels:
-     app: ${APP_LABEL}
-     threescale_component: backend
-     threescale_component_element: redis
-   name: backend-redis
-spec:
-  replicas: 1
-  selector:
-    deploymentConfig: backend-redis
-  strategy:
-    resources: {}
-    type: Recreate
-  template:
-    metadata:
-  creationTimestamp: null
-  labels:
-    app: ${APP_LABEL}
-    deploymentConfig: backend-redis
-    threescale_component: backend
-    threescale_component_element: redis
-spec:
-  containers:
-  - args:
-    - /etc/redis.d/redis.conf
-    - --daemonize
-    - "no"
-    command:
-    - /opt/rh/rh-redis32/root/usr/bin/redis-server
-    image: backend-redis:latest
-    imagePullPolicy: IfNotPresent
-    livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 10
-    tcpSocket:
-        port: 6379
+     tags:
+     - annotations:
+         openshift.io/display-name: System MySQL (latest)
+       from:
+         kind: ImageStreamTag
+         name: ${AMP_RELEASE}
+       generation: null
+       importPolicy: {}
+       name: latest
+       referencePolicy:
+         type: ""
+     - annotations:
+         openshift.io/display-name: System ${AMP_RELEASE} MySQL
+       from:
+         kind: DockerImage
+         name: ${SYSTEM_DATABASE_IMAGE}
+       generation: null
+       importPolicy:
+         insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
+       name: ${AMP_RELEASE}
+       referencePolicy:
+         type: ""
+  status:
+    dockerImageRepository: ""
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+       app: ${APP_LABEL}
+       threescale_component: backend
+       threescale_component_element: redis
     name: backend-redis
-    readinessProbe:
-    exec:
-      command:
-      - container-entrypoint
-      - bash
-      - -c
-      - redis-cli set liveness-probe "`date`" | grep OK
-    initialDelaySeconds: 10
-    periodSeconds: 30
-    timeoutSeconds: 1
-    resources:
-    limits:
-      cpu: "2"
-      memory: 32Gi
-    requests:
-      cpu: "1"
-      memory: 1Gi
-    volumeMounts:
+  spec:
+    replicas: 1
+    selector:
+      deploymentConfig: backend-redis
+    strategy:
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: ${APP_LABEL}
+          deploymentConfig: backend-redis
+          threescale_component: backend
+          threescale_component_element: redis
+    spec:
+      containers:
+      - args:
+        - /etc/redis.d/redis.conf
+        - --daemonize
+        - "no"
+        command:
+        - /opt/rh/rh-redis32/root/usr/bin/redis-server
+        image: backend-redis:latest
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          tcpSocket:
+            port: 6379
+        name: backend-redis
+        readinessProbe:
+          exec:
+            command:
+            - container-entrypoint
+            - bash
+            - -c
+            - redis-cli set liveness-probe "`date`" | grep OK
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: "2"
+            memory: 32Gi
+          requests:
+            cpu: "1"
+            memory: 1Gi
+          volumeMounts:
     - mountPath: /var/lib/redis/data
     name: backend-redis-storage
     - mountPath: /etc/redis.d/
