@@ -683,51 +683,51 @@ objects:
           env:
           - name: CONFIG_REDIS_PROXY
             valueFrom:
-        secretKeyRef:
-        key: REDIS_STORAGE_URL
-        name: backend-redis
-    - name: CONFIG_REDIS_SENTINEL_HOSTS
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_STORAGE_SENTINEL_HOSTS
-        name: backend-redis
-    - name: CONFIG_REDIS_SENTINEL_ROLE
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_STORAGE_SENTINEL_ROLE
-        name: backend-redis
-    - name: CONFIG_QUEUES_MASTER_NAME
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_QUEUES_URL
-        name: backend-redis
-    - name: CONFIG_QUEUES_SENTINEL_HOSTS
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_QUEUES_SENTINEL_HOSTS
-        name: backend-redis
-    - name: CONFIG_QUEUES_SENTINEL_ROLE
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_QUEUES_SENTINEL_ROLE
-        name: backend-redis
-    - name: RACK_ENV
-    valueFrom:
-        configMapKeyRef:
-        key: RACK_ENV
-        name: backend-environment
-    image: amp-backend:latest
-    imagePullPolicy: IfNotPresent
-    name: backend-cron
-    resources:
-    limits:
-        cpu: 150m
-        memory: 80Mi
-    requests:
-        cpu: 50m
-        memory: 40Mi
-  initContainers:
-  - command:
+              secretKeyRef:
+                key: REDIS_STORAGE_URL
+                name: backend-redis
+          - name: CONFIG_REDIS_SENTINEL_HOSTS
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_STORAGE_SENTINEL_HOSTS
+                name: backend-redis
+          - name: CONFIG_REDIS_SENTINEL_ROLE
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_STORAGE_SENTINEL_ROLE
+                name: backend-redis
+          - name: CONFIG_QUEUES_MASTER_NAME
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_QUEUES_URL
+                name: backend-redis
+          - name: CONFIG_QUEUES_SENTINEL_HOSTS
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_QUEUES_SENTINEL_HOSTS
+                name: backend-redis
+          - name: CONFIG_QUEUES_SENTINEL_ROLE
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_QUEUES_SENTINEL_ROLE
+                name: backend-redis
+          - name: RACK_ENV
+            valueFrom:
+              configMapKeyRef:
+                key: RACK_ENV
+                name: backend-environment
+          image: amp-backend:latest
+          imagePullPolicy: IfNotPresent
+          name: backend-cron
+          resources:
+            limits:
+              cpu: 150m
+              memory: 80Mi
+            requests:
+              cpu: 50m
+              memory: 40Mi
+        initContainers:
+        - command:
     - /opt/app/entrypoint.sh
     - sh
     - -c
