@@ -927,205 +927,205 @@ objects:
      unavailableReplicas: 0
      updatedReplicas: 0
 - apiVersion: v1
-   kind: Service
-   metadata:
- creationTimestamp: null
- labels:
-     app: ${APP_LABEL}
-     threescale_component: backend
-     threescale_component_element: listener
- name: backend-listener
-   spec:
- ports:
- - name: http
-     port: 3000
-     protocol: TCP
-     targetPort: 3000
- selector:
-     deploymentConfig: backend-listener
-   status:
- loadBalancer: {}
- - apiVersion: route.openshift.io/v1
-   kind: Route
-   metadata:
- creationTimestamp: null
- labels:
-     app: ${APP_LABEL}
-     threescale_component: backend
- name: backend
-   spec:
- host: backend-${TENANT_NAME}.${WILDCARD_DOMAIN}
- port:
-     targetPort: http
- tls:
-     insecureEdgeTerminationPolicy: Allow
-     termination: edge
- to:
-     kind: Service
-     name: backend-listener
-     weight: null
-   status:
- ingress: null
- - apiVersion: apps.openshift.io/v1
-   kind: DeploymentConfig
-   metadata:
- creationTimestamp: null
- labels:
-     app: ${APP_LABEL}
-     threescale_component: backend
-     threescale_component_element: worker
- name: backend-worker
-   spec:
- replicas: 1
- selector:
-     deploymentConfig: backend-worker
- strategy:
-     resources: {}
-     rollingParams:
-  intervalSeconds: 1
-  maxSurge: 25%
-  maxUnavailable: 25%
-  timeoutSeconds: 1200
-  updatePeriodSeconds: 1
-     type: Rolling
- template:
-     metadata:
-  creationTimestamp: null
-  labels:
-    app: ${APP_LABEL}
-    deploymentConfig: backend-worker
-    threescale_component: backend
-    threescale_component_element: worker
-     spec:
-  containers:
-  - args:
-    - bin/3scale_backend_worker
-    - run
-    env:
-    - name: CONFIG_REDIS_PROXY
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_STORAGE_URL
-        name: backend-redis
-    - name: CONFIG_REDIS_SENTINEL_HOSTS
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_STORAGE_SENTINEL_HOSTS
-        name: backend-redis
-    - name: CONFIG_REDIS_SENTINEL_ROLE
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_STORAGE_SENTINEL_ROLE
-        name: backend-redis
-    - name: CONFIG_QUEUES_MASTER_NAME
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_QUEUES_URL
-        name: backend-redis
-    - name: CONFIG_QUEUES_SENTINEL_HOSTS
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_QUEUES_SENTINEL_HOSTS
-        name: backend-redis
-    - name: CONFIG_QUEUES_SENTINEL_ROLE
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_QUEUES_SENTINEL_ROLE
-        name: backend-redis
-    - name: RACK_ENV
-    valueFrom:
-        configMapKeyRef:
-        key: RACK_ENV
-        name: backend-environment
-    - name: CONFIG_EVENTS_HOOK
-    valueFrom:
-        secretKeyRef:
-        key: URL
-        name: system-events-hook
-    - name: CONFIG_EVENTS_HOOK_SHARED_SECRET
-    valueFrom:
-        secretKeyRef:
-        key: PASSWORD
-        name: system-events-hook
-    image: amp-backend:latest
-    imagePullPolicy: IfNotPresent
+  kind: Service
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: backend
+      threescale_component_element: listener
+    name: backend-listener
+  spec:
+    ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+    selector:
+      deploymentConfig: backend-listener
+  status:
+    loadBalancer: {}
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: backend
+    name: backend
+  spec:
+    host: backend-${TENANT_NAME}.${WILDCARD_DOMAIN}
+    port:
+      targetPort: http
+    tls:
+      insecureEdgeTerminationPolicy: Allow
+      termination: edge
+    to:
+      kind: Service
+      name: backend-listener
+      weight: null
+  status:
+    ingress: null
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: backend
+      threescale_component_element: worker
     name: backend-worker
-    resources:
-    limits:
-        cpu: "1"
-        memory: 300Mi
-    requests:
-        cpu: 150m
-        memory: 50Mi
-  initContainers:
-  - command:
-    - /opt/app/entrypoint.sh
-    - sh
-    - -c
-    - until rake connectivity:redis_storage_queue_check; do sleep $SLEEP_SECONDS;
- done
-    env:
-    - name: CONFIG_REDIS_PROXY
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_STORAGE_URL
-        name: backend-redis
-    - name: CONFIG_REDIS_SENTINEL_HOSTS
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_STORAGE_SENTINEL_HOSTS
-        name: backend-redis
-    - name: CONFIG_REDIS_SENTINEL_ROLE
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_STORAGE_SENTINEL_ROLE
-        name: backend-redis
-    - name: CONFIG_QUEUES_MASTER_NAME
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_QUEUES_URL
-        name: backend-redis
-    - name: CONFIG_QUEUES_SENTINEL_HOSTS
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_QUEUES_SENTINEL_HOSTS
-        name: backend-redis
-    - name: CONFIG_QUEUES_SENTINEL_ROLE
-    valueFrom:
-        secretKeyRef:
-        key: REDIS_QUEUES_SENTINEL_ROLE
-        name: backend-redis
-    - name: RACK_ENV
-    valueFrom:
-        configMapKeyRef:
-        key: RACK_ENV
-        name: backend-environment
-    - name: SLEEP_SECONDS
-    value: "1"
-    image: amp-backend:latest
-    name: backend-redis-svc
-    resources: {}
-  serviceAccountName: amp
- test: false
- triggers:
- - type: ConfigChange
- - imageChangeParams:
-  automatic: true
-  containerNames:
-  - backend-redis-svc
-  - backend-worker
-  from:
-    kind: ImageStreamTag
-    name: amp-backend:latest
-     type: ImageChange
-   status:
- availableReplicas: 0
- latestVersion: 0
- observedGeneration: 0
- replicas: 0
- unavailableReplicas: 0
- updatedReplicas: 0
- - apiVersion: v1
+  spec:
+    replicas: 1
+    selector:
+      deploymentConfig: backend-worker
+    strategy:
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 1200
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: ${APP_LABEL}
+          deploymentConfig: backend-worker
+          threescale_component: backend
+          threescale_component_element: worker
+      spec:
+        containers:
+        - args:
+          - bin/3scale_backend_worker
+          - run
+          env:
+          - name: CONFIG_REDIS_PROXY
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_STORAGE_URL
+                name: backend-redis
+          - name: CONFIG_REDIS_SENTINEL_HOSTS
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_STORAGE_SENTINEL_HOSTS
+                name: backend-redis
+          - name: CONFIG_REDIS_SENTINEL_ROLE
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_STORAGE_SENTINEL_ROLE
+                name: backend-redis
+          - name: CONFIG_QUEUES_MASTER_NAME
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_QUEUES_URL
+                name: backend-redis
+          - name: CONFIG_QUEUES_SENTINEL_HOSTS
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_QUEUES_SENTINEL_HOSTS
+                name: backend-redis
+          - name: CONFIG_QUEUES_SENTINEL_ROLE
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_QUEUES_SENTINEL_ROLE
+                name: backend-redis
+          - name: RACK_ENV
+            valueFrom:
+              configMapKeyRef:
+                key: RACK_ENV
+                name: backend-environment
+          - name: CONFIG_EVENTS_HOOK
+            valueFrom:
+              secretKeyRef:
+                key: URL
+                name: system-events-hook
+          - name: CONFIG_EVENTS_HOOK_SHARED_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: PASSWORD
+                name: system-events-hook
+          image: amp-backend:latest
+          imagePullPolicy: IfNotPresent
+          name: backend-worker
+          resources:
+            limits:
+              cpu: "1"
+              memory: 300Mi
+            requests:
+              cpu: 150m
+              memory: 50Mi
+        initContainers:
+        - command:
+          - /opt/app/entrypoint.sh
+          - sh
+          - -c
+          - until rake connectivity:redis_storage_queue_check; do sleep $SLEEP_SECONDS;
+            done
+          env:
+          - name: CONFIG_REDIS_PROXY
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_STORAGE_URL
+                name: backend-redis
+          - name: CONFIG_REDIS_SENTINEL_HOSTS
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_STORAGE_SENTINEL_HOSTS
+                name: backend-redis
+          - name: CONFIG_REDIS_SENTINEL_ROLE
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_STORAGE_SENTINEL_ROLE
+                name: backend-redis
+          - name: CONFIG_QUEUES_MASTER_NAME
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_QUEUES_URL
+                name: backend-redis
+          - name: CONFIG_QUEUES_SENTINEL_HOSTS
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_QUEUES_SENTINEL_HOSTS
+                name: backend-redis
+          - name: CONFIG_QUEUES_SENTINEL_ROLE
+            valueFrom:
+              secretKeyRef:
+                key: REDIS_QUEUES_SENTINEL_ROLE
+                name: backend-redis
+          - name: RACK_ENV
+            valueFrom:
+              configMapKeyRef:
+                key: RACK_ENV
+                name: backend-environment
+          - name: SLEEP_SECONDS
+            value: "1"
+          image: amp-backend:latest
+          name: backend-redis-svc
+          resources: {}
+        serviceAccountName: amp
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - backend-redis-svc
+        - backend-worker
+        from:
+          kind: ImageStreamTag
+          name: amp-backend:latest
+        type: ImageChange
+    status:
+      availableReplicas: 0
+      latestVersion: 0
+      observedGeneration: 0
+      replicas: 0
+      unavailableReplicas: 0
+      updatedReplicas: 0
+- apiVersion: v1
    data:
  RACK_ENV: production
    kind: ConfigMap
