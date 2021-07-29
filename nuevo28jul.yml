@@ -574,115 +574,115 @@ objects:
     unavailableReplicas: 0
     updatedReplicas: 0
 - apiVersion: v1
-   kind: PersistentVolumeClaim
-   metadata:
- creationTimestamp: null
- labels:
-     app: ${APP_LABEL}
-     threescale_component: system
-     threescale_component_element: redis
- name: system-redis-storage
-   spec:
- accessModes:
- - ReadWriteOnce
- dataSource: null
- resources:
-   requests:
-  storage: 1Gi
-   status: {}
- - apiVersion: v1
-   kind: Service
-   metadata:
- creationTimestamp: null
- labels:
-     app: ${APP_LABEL}
-     threescale_component: system
-     threescale_component_element: redis
- name: system-redis
-   spec:
- ports:
- - name: redis
-     port: 6379
-     protocol: TCP
-     targetPort: 6379
- selector:
-     deploymentConfig: system-redis
-   status:
- loadBalancer: {}
- - apiVersion: image.openshift.io/v1
-   kind: ImageStream
-   metadata:
- annotations:
-     openshift.io/display-name: System Redis
- creationTimestamp: null
- labels:
-     app: ${APP_LABEL}
-     threescale_component: system
- name: system-redis
-   spec:
- lookupPolicy:
-     local: false
- tags:
- - annotations:
-  openshift.io/display-name: System Redis (latest)
-     from:
-  kind: ImageStreamTag
-  name: ${AMP_RELEASE}
-     generation: null
-     importPolicy: {}
-     name: latest
-     referencePolicy:
-  type: ""
- - annotations:
-  openshift.io/display-name: System ${AMP_RELEASE} Redis
-     from:
-  kind: DockerImage
-  name: ${REDIS_IMAGE}
-     generation: null
-     importPolicy:
-  insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
-     name: ${AMP_RELEASE}
-     referencePolicy:
-  type: ""
-   status:
- dockerImageRepository: ""
- - apiVersion: apps.openshift.io/v1
-   kind: DeploymentConfig
-   metadata:
- creationTimestamp: null
- labels:
-     app: ${APP_LABEL}
-     threescale_component: backend
-     threescale_component_element: cron
- name: backend-cron
-   spec:
- replicas: 1
- selector:
-     deploymentConfig: backend-cron
- strategy:
-     resources: {}
-     rollingParams:
-  intervalSeconds: 1
-  maxSurge: 25%
-  maxUnavailable: 25%
-  timeoutSeconds: 1200
-  updatePeriodSeconds: 1
-     type: Rolling
- template:
-     metadata:
-  creationTimestamp: null
-  labels:
-    app: ${APP_LABEL}
-    deploymentConfig: backend-cron
-    threescale_component: backend
-    threescale_component_element: cron
-     spec:
-  containers:
-  - args:
-    - backend-cron
-    env:
-    - name: CONFIG_REDIS_PROXY
-    valueFrom:
+  kind: PersistentVolumeClaim
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: system
+      threescale_component_element: redis
+    name: system-redis-storage
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    dataSource: null
+    resources:
+          requests:
+            storage: 1Gi
+  status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: system
+      threescale_component_element: redis
+    name: system-redis
+  spec:
+    ports:
+    - name: redis
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+    selector:
+      deploymentConfig: system-redis
+  status:
+    loadBalancer: {}
+- apiVersion: image.openshift.io/v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/display-name: System Redis
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: system
+    name: system-redis
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/display-name: System Redis (latest)
+      from:
+        kind: ImageStreamTag
+        name: ${AMP_RELEASE}
+      generation: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: ""
+    - annotations:
+        openshift.io/display-name: System ${AMP_RELEASE} Redis
+      from:
+        kind: DockerImage
+        name: ${REDIS_IMAGE}
+      generation: null
+      importPolicy:
+        insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
+      name: ${AMP_RELEASE}
+      referencePolicy:
+        type: ""
+  status:
+    dockerImageRepository: ""
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: backend
+      threescale_component_element: cron
+    name: backend-cron
+  spec:
+    replicas: 1
+    selector:
+      deploymentConfig: backend-cron
+    strategy:
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 1200
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: ${APP_LABEL}
+          deploymentConfig: backend-cron
+          threescale_component: backend
+          threescale_component_element: cron
+      spec:
+        containers:
+        - args:
+          - backend-cron
+          env:
+          - name: CONFIG_REDIS_PROXY
+            valueFrom:
         secretKeyRef:
         key: REDIS_STORAGE_URL
         name: backend-redis
