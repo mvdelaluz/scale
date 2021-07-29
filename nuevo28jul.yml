@@ -132,38 +132,38 @@ spec:
           app: ${APP_LABEL}
           threescale_component: system
         name: amp-system
-  spec:
-    lookupPolicy:
-      local: false
-    tags:
-    - annotations:
-        openshift.io/display-name: AMP System (latest)
-      from:
-        kind: ImageStreamTag
-        name: ${AMP_RELEASE}
-      generation: null
-      importPolicy: {}
-      name: latest
-      referencePolicy:
-        type: ""
-    - annotations:
-        openshift.io/display-name: AMP system ${AMP_RELEASE}
-      from:
-        kind: DockerImage
-        name: ${AMP_SYSTEM_IMAGE}
-      generation: null
-      importPolicy:
-        insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
-      name: ${AMP_RELEASE}
-        referencePolicy:
-          type: ""
-    status:
-      dockerImageRepository: ""
-  - apiVersion: image.openshift.io/v1
-    kind: ImageStream
-    metadata:
-      annotations:
-      openshift.io/display-name: Zync database PostgreSQL
+      spec:
+        lookupPolicy:
+          local: false
+        tags:
+        - annotations:
+            openshift.io/display-name: AMP System (latest)
+          from:
+            kind: ImageStreamTag
+            name: ${AMP_RELEASE}
+          generation: null
+          importPolicy: {}
+          name: latest
+          referencePolicy:
+            type: ""
+        - annotations:
+            openshift.io/display-name: AMP system ${AMP_RELEASE}
+          from:
+            kind: DockerImage
+            name: ${AMP_SYSTEM_IMAGE}
+          generation: null
+          importPolicy:
+            insecure: ${{IMAGESTREAM_TAG_IMPORT_INSECURE}}
+          name: ${AMP_RELEASE}
+          referencePolicy:
+            type: ""
+        status:
+          dockerImageRepository: ""
+    - apiVersion: image.openshift.io/v1
+      kind: ImageStream
+      metadata:
+        annotations:
+          openshift.io/display-name: Zync database PostgreSQL
       creationTimestamp: null
       labels:
         app: ${APP_LABEL}
