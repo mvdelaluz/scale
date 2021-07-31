@@ -1100,69 +1100,6 @@ objects:
               configMapKeyRef:
                 key: RACK_ENV
                 name: backend-environment
-          - name: CONFIG_EVENTS_HOOK
-            valueFrom:
-              secretKeyRef:
-                key: URL
-                name: system-events-hook
-          - name: CONFIG_EVENTS_HOOK_SHARED_SECRET
-            valueFrom:
-              secretKeyRef:
-                key: PASSWORD
-                name: system-events-hook
-          image: amp-backend:latest
-          imagePullPolicy: IfNotPresent
-          name: backend-worker
-          resources:
-            limits:
-              cpu: "1"
-              memory: 300Mi
-            requests:
-              cpu: 150m
-              memory: 50Mi
-        initContainers:
-        - command:
-          - /opt/app/entrypoint.sh
-          - sh
-          - -c
-          - until rake connectivity:redis_storage_queue_check; do sleep $SLEEP_SECONDS;
-            done
-          env:
-          - name: CONFIG_REDIS_PROXY
-            valueFrom:
-              secretKeyRef:
-                key: REDIS_STORAGE_URL
-                name: backend-redis
-          - name: CONFIG_REDIS_SENTINEL_HOSTS
-            valueFrom:
-              secretKeyRef:
-                key: REDIS_STORAGE_SENTINEL_HOSTS
-                name: backend-redis
-          - name: CONFIG_REDIS_SENTINEL_ROLE
-            valueFrom:
-              secretKeyRef:
-                key: REDIS_STORAGE_SENTINEL_ROLE
-                name: backend-redis
-          - name: CONFIG_QUEUES_MASTER_NAME
-            valueFrom:
-              secretKeyRef:
-                key: REDIS_QUEUES_URL
-                name: backend-redis
-          - name: CONFIG_QUEUES_SENTINEL_HOSTS
-            valueFrom:
-              secretKeyRef:
-                key: REDIS_QUEUES_SENTINEL_HOSTS
-                name: backend-redis
-          - name: CONFIG_QUEUES_SENTINEL_ROLE
-            valueFrom:
-              secretKeyRef:
-                key: REDIS_QUEUES_SENTINEL_ROLE
-                name: backend-redis
-          - name: RACK_ENV
-            valueFrom:
-              configMapKeyRef:
-                key: RACK_ENV
-                name: backend-environment
           - name: SLEEP_SECONDS
             value: "1"
           image: amp-backend:latest
@@ -4215,104 +4152,104 @@ objects:
             initialDelaySeconds: 15
             periodSeconds: 30
             timeoutSeconds: 5
-            resources:
-              limits:
-                cpu: "1"
-                memory: 128Mi
+          resources:
+            limits:
+              cpu: "1"
+              memory: 128Mi
             requests:
-                cpu: 500m
-                memory: 64Mi
-          initContainers:
-          - command:
-            - sh
-            - -c
-            - until $(curl --output /dev/null --silent --fail --head http://system-master:3000/status);
-              do sleep $SLEEP_SECONDS; done
-            env:
-            - name: SLEEP_SECONDS
-              value: "1"
-         image: amp-apicast:latest
-    name: system-master-svc
-    resources: {}
-  serviceAccountName: amp
- test: false
- triggers:
- - type: ConfigChange
- - imageChangeParams:
-  automatic: true
-  containerNames:
-  - system-master-svc
-  - apicast-production
-  from:
-    kind: ImageStreamTag
-    name: amp-apicast:latest
-     type: ImageChange
-   status:
- availableReplicas: 0
- latestVersion: 0
- observedGeneration: 0
- replicas: 0
- unavailableReplicas: 0
- updatedReplicas: 0
- - apiVersion: v1
-   kind: Service
-   metadata:
- creationTimestamp: null
- labels:
-     app: ${APP_LABEL}
-     threescale_component: apicast
-     threescale_component_element: staging
- name: apicast-staging
-   spec:
- ports:
- - name: gateway
-     port: 8080
-     protocol: TCP
-     targetPort: 8080
- - name: management
-     port: 8090
-     protocol: TCP
-     targetPort: 8090
- selector:
-     deploymentConfig: apicast-staging
-   status:
- loadBalancer: {}
- - apiVersion: v1
-   kind: Service
-   metadata:
- creationTimestamp: null
- labels:
-     app: ${APP_LABEL}
-     threescale_component: apicast
-     threescale_component_element: production
- name: apicast-production
-   spec:
- ports:
- - name: gateway
-     port: 8080
-     protocol: TCP
-     targetPort: 8080
- - name: management
-     port: 8090
-     protocol: TCP
-     targetPort: 8090
- selector:
-     deploymentConfig: apicast-production
-   status:
- loadBalancer: {}
- - apiVersion: v1
-   data:
- APICAST_MANAGEMENT_API: ${APICAST_MANAGEMENT_API}
- APICAST_RESPONSE_CODES: ${APICAST_RESPONSE_CODES}
- OPENSSL_VERIFY: ${APICAST_OPENSSL_VERIFY}
-   kind: ConfigMap
-   metadata:
- creationTimestamp: null
- labels:
-     app: ${APP_LABEL}
-     threescale_component: apicast
- name: apicast-environment
- parameters:
+              cpu: 500m
+              memory: 64Mi
+        initContainers:
+        - command:
+          - sh
+          - -c
+          - until $(curl --output /dev/null --silent --fail --head http://system-master:3000/status);
+            do sleep $SLEEP_SECONDS; done
+          env:
+          - name: SLEEP_SECONDS
+            value: "1"
+          image: amp-apicast:latest
+          name: system-master-svc
+          resources: {}
+        serviceAccountName: amp
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - system-master-svc
+        - apicast-production
+        from:
+          kind: ImageStreamTag
+          name: amp-apicast:latest
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: apicast
+      threescale_component_element: staging
+    name: apicast-staging
+  spec:
+    ports:
+    - name: gateway
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: management
+      port: 8090
+      protocol: TCP
+      targetPort: 8090
+    selector:
+      deploymentConfig: apicast-staging
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: ${APP_LABEL}
+      threescale_component: apicast
+      threescale_component_element: production
+    name: apicast-production
+  spec:
+    ports:
+    - name: gateway
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: management
+      port: 8090
+      protocol: TCP
+      targetPort: 8090
+    selector:
+      deploymentConfig: apicast-production
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  data:
+    APICAST_MANAGEMENT_API: ${APICAST_MANAGEMENT_API}
+    APICAST_RESPONSE_CODES: ${APICAST_RESPONSE_CODES}
+    OPENSSL_VERIFY: ${APICAST_OPENSSL_VERIFY}
+  kind: ConfigMap
+  metadata:
+     creationTimestamp: null
+     labels:
+       app: ${APP_LABEL}
+       threescale_component: apicast
+     name: apicast-environment
+parameters:
  - description: AMP release tag.
    name: AMP_RELEASE
    required: true
@@ -4322,7 +4259,7 @@ objects:
    required: true
    value: 3scale-api-management
  - description: Tenant name under the root that Admin UI will be available with -admin
-   suffix.
+     suffix.
    name: TENANT_NAME
    required: true
    value: 3scale
@@ -4350,7 +4287,7 @@ objects:
    required: true
    value: sttocp1.sf.prosa.com.mx:5000/prosa_sf-red_hat_container_catalog-memcached-rhel7:3scale2.8
  - description: Set to true if the server may bypass certificate verification or connect
-   directly over HTTP during image import.
+     directly over HTTP during image import.
    name: IMAGESTREAM_TAG_IMPORT_INSECURE
    required: true
    value: "false"
@@ -4363,7 +4300,7 @@ objects:
    required: true
    value: sttocp1.sf.prosa.com.mx:5000/prosa_sf-red_hat_container_catalog-redis-32-rhel7:3.2
  - description: Username for System's MySQL user that will be used for accessing the
-   database.
+     database.
    displayName: System MySQL User
    name: SYSTEM_DATABASE_USER
    required: true
@@ -4386,7 +4323,7 @@ objects:
    name: SYSTEM_DATABASE_ROOT_PASSWORD
    required: true
  - description: Root domain for the wildcard routes. Eg. example.com will generate
-   3scale-admin.example.com.
+     3scale-admin.example.com.
    name: WILDCARD_DOMAIN
    required: true
  - description: Internal 3scale API username for internal 3scale api auth.
@@ -4444,32 +4381,14 @@ objects:
    required: true
    value: redis://system-redis:6379/1
  - description: Define the external system-redis message bus to connect to. By defaul
-   the same value as SYSTEM_REDIS_URL but with the logical database incremented b
- - from: '[a-z0-9]{8}'
-   generate: expression
-   name: MASTER_PASSWORD
-   required: true
- - from: '[a-z0-9]{8}'
-   generate: expression
-   name: MASTER_ACCESS_TOKEN
-   required: true
- - description: reCAPTCHA site key (used in spam protection)
-   name: RECAPTCHA_PUBLIC_KEY
- - description: reCAPTCHA secret key (used in spam protection)
-   name: RECAPTCHA_PRIVATE_KEY
- - description: Define the external system-redis to connect to
-   name: SYSTEM_REDIS_URL
-   required: true
-   value: redis://system-redis:6379/1
- - description: Define the external system-redis message bus to connect to. By defaul
-   the same value as SYSTEM_REDIS_URL but with the logical database incremented b
-   1 and the result applied mod 16
+     the same value as SYSTEM_REDIS_URL but with the logical database incremented b
+     1 and the result applied mod 16
    name: SYSTEM_MESSAGE_BUS_REDIS_URL
  - description: Define the namespace to be used by System's Redis Database. The empty
-   value means not namespaced
+     value means not namespaced
    name: SYSTEM_REDIS_NAMESPACE
  - description: Define the namespace to be used by System's Message Bus Redis Database.
-   The empty value means not namespaced
+     The empty value means not namespaced
    name: SYSTEM_MESSAGE_BUS_REDIS_NAMESPACE
  - description: Password for the Zync Database PostgreSQL connection user.
    displayName: Zync Database PostgreSQL Connection Password
