@@ -1,0 +1,154 @@
+[root@ansocp1 rh]# cat inventory
+[OSEv3:children]
+masters
+nodes
+etcd
+glusterfs
+glusterfs_registry
+
+[etcd]
+mstocp1.sf.prosa.com.mx openshift_public_hostname=mstocp1.sf.prosa.com.mx
+mstocp2.sf.prosa.com.mx openshift_public_hostname=mstocp2.sf.prosa.com.mx
+mstocp3.sf.prosa.com.mx openshift_public_hostname=mstocp3.sf.prosa.com.mx
+
+[masters]
+mstocp1.sf.prosa.com.mx openshift_public_hostname=mstocp1.sf.prosa.com.mx
+mstocp2.sf.prosa.com.mx openshift_public_hostname=mstocp2.sf.prosa.com.mx
+mstocp3.sf.prosa.com.mx openshift_public_hostname=mstocp3.sf.prosa.com.mx
+
+[nodes]
+mstocp1.sf.prosa.com.mx openshift_public_hostname=mstocp1.sf.prosa.com.mx openshift_node_group_name='node-config-master1' openshift_public_ip=192.168.105.182
+mstocp2.sf.prosa.com.mx openshift_public_hostname=mstocp2.sf.prosa.com.mx openshift_node_group_name='node-config-master2' openshift_public_ip=192.168.105.183
+mstocp3.sf.prosa.com.mx openshift_public_hostname=mstocp3.sf.prosa.com.mx openshift_node_group_name='node-config-master3' openshift_public_ip=192.168.105.184
+
+rirocp1.sf.prosa.com.mx openshift_public_hostname=rirocp1.sf.prosa.com.mx openshift_node_group_name='node-config-infra1' openshift_public_ip=192.168.105.186
+rirocp2.sf.prosa.com.mx openshift_public_hostname=rirocp2.sf.prosa.com.mx openshift_node_group_name='node-config-infra2' openshift_public_ip=192.168.105.187
+rirocp3.sf.prosa.com.mx openshift_public_hostname=rirocp3.sf.prosa.com.mx openshift_node_group_name='node-config-infra3' openshift_public_ip=192.168.105.188
+
+appocp1.sf.prosa.com.mx openshift_public_hostname=appocp1.sf.prosa.com.mx openshift_node_group_name='node-config-compute1' openshift_public_ip=192.168.105.246
+appocp2.sf.prosa.com.mx openshift_public_hostname=appocp2.sf.prosa.com.mx openshift_node_group_name='node-config-compute2' openshift_public_ip=192.168.105.198
+appocp3.sf.prosa.com.mx openshift_public_hostname=appocp3.sf.prosa.com.mx openshift_node_group_name='node-config-compute3' openshift_public_ip=192.168.105.201
+appocp4.sf.prosa.com.mx openshift_public_hostname=appocp4.sf.prosa.com.mx openshift_node_group_name='node-config-compute4' openshift_public_ip=192.168.105.202
+appocp5.sf.prosa.com.mx openshift_public_hostname=appocp5.sf.prosa.com.mx openshift_node_group_name='node-config-compute5' openshift_public_ip=192.168.105.204
+
+smlocp1.sf.prosa.com.mx openshift_public_hostname=smlocp1.sf.prosa.com.mx openshift_node_group_name='node-config-metrics1' openshift_public_ip=192.168.105.247
+smlocp2.sf.prosa.com.mx openshift_public_hostname=smlocp2.sf.prosa.com.mx openshift_node_group_name='node-config-metrics2' openshift_public_ip=192.168.105.199
+smlocp3.sf.prosa.com.mx openshift_public_hostname=smlocp3.sf.prosa.com.mx openshift_node_group_name='node-config-metrics3' openshift_public_ip=192.168.105.203
+
+lgnocp1.sf.prosa.com.mx openshift_public_hostname=lgnocp1.sf.prosa.com.mx openshift_node_group_name='node-config-logging1' openshift_public_ip=192.168.105.244
+lgnocp2.sf.prosa.com.mx openshift_public_hostname=lgnocp2.sf.prosa.com.mx openshift_node_group_name='node-config-logging2' openshift_public_ip=192.168.105.196
+lgnocp3.sf.prosa.com.mx openshift_public_hostname=lgnocp3.sf.prosa.com.mx openshift_node_group_name='node-config-logging3' openshift_public_ip=192.168.105.245
+
+stgocp1.sf.prosa.com.mx openshift_public_hostname=stgocp1.sf.prosa.com.mx openshift_node_group_name='node-config-storage1' openshift_public_ip=192.168.105.192
+stgocp2.sf.prosa.com.mx openshift_public_hostname=stgocp2.sf.prosa.com.mx openshift_node_group_name='node-config-storage2' openshift_public_ip=192.168.105.194
+stgocp3.sf.prosa.com.mx openshift_public_hostname=stgocp3.sf.prosa.com.mx openshift_node_group_name='node-config-storage3' openshift_public_ip=192.168.105.195
+stgocp4.sf.prosa.com.mx openshift_public_hostname=stgocp4.sf.prosa.com.mx openshift_node_group_name='node-config-storage4' openshift_public_ip=192.168.105.248
+
+[glusterfs]
+stgocp1.sf.prosa.com.mx glusterfs_zone=1 glusterfs_devices='["/dev/vdd"]'
+stgocp2.sf.prosa.com.mx glusterfs_zone=2 glusterfs_devices='["/dev/vdd"]'
+stgocp3.sf.prosa.com.mx glusterfs_zone=3 glusterfs_devices='["/dev/vdd"]'
+stgocp4.sf.prosa.com.mx glusterfs_zone=1 glusterfs_devices='["/dev/vdd"]'
+
+[glusterfs_registry]
+stgocp1.sf.prosa.com.mx glusterfs_zone=1 glusterfs_devices='["/dev/vdd"]'
+stgocp2.sf.prosa.com.mx glusterfs_zone=2 glusterfs_devices='["/dev/vdd"]'
+stgocp3.sf.prosa.com.mx glusterfs_zone=3 glusterfs_devices='["/dev/vdd"]'
+stgocp4.sf.prosa.com.mx glusterfs_zone=1 glusterfs_devices='["/dev/vdd"]'
+
+
+[OSEv3:vars]
+ansible_ssh_user=root
+ansible_become=false
+debug_level=2
+openshift_release=v3.11.404
+package_version="3.11.404"
+openshift_deployment_type=openshift-enterprise
+openshift_examples_modify_imagestreams=true
+openshift_enable_unsupported_configurations=True
+openshift_disable_check="disk_availability,memory_availability,docker_image_availability"
+os_firewall_use_firewalld=True
+
+openshift_node_groups=[{'name': 'node-config-master1', 'labels':['node-role.kubernetes.io/master=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.182']}]}, {'name': 'node-config-master2', 'labels':['node-role.kubernetes.io/master=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.183']}]}, {'name': 'node-config-master3', 'labels':['node-role.kubernetes.io/master=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.184']}]}, {'name': 'node-config-infra1', 'labels': ['node-role.kubernetes.io/infra=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.186']}]}, {'name': 'node-config-infra2', 'labels': ['node-role.kubernetes.io/infra=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.187']}]}, {'name': 'node-config-infra3', 'labels': ['node-role.kubernetes.io/infra=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.188']}]}, {'name': 'node-config-compute1', 'labels': ['node-role.kubernetes.io/compute=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.246']}]}, {'name': 'node-config-compute2', 'labels': ['node-role.kubernetes.io/compute=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.198']}]}, {'name': 'node-config-compute3', 'labels': ['node-role.kubernetes.io/compute=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.201']}]}, {'name': 'node-config-compute4', 'labels': ['node-role.kubernetes.io/compute=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.202']}]}, {'name': 'node-config-compute5', 'labels': ['node-role.kubernetes.io/compute=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.204']}]}, {'name': 'node-config-metrics1', 'labels': ['node-role.kubernetes.io/metrics=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.247']}]}, {'name': 'node-config-metrics2', 'labels': ['node-role.kubernetes.io/metrics=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.199']}]}, {'name': 'node-config-metrics3', 'labels': ['node-role.kubernetes.io/metrics=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.203']}]}, {'name': 'node-config-logging1', 'labels': ['node-role.kubernetes.io/logging=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.244']}]}, {'name': 'node-config-logging2', 'labels': ['node-role.kubernetes.io/logging=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.196']}]}, {'name': 'node-config-logging3', 'labels': ['node-role.kubernetes.io/logging=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.245']}]}, {'name': 'node-config-storage1', 'labels': ['node-role.kubernetes.io/storage=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.192']}]}, {'name': 'node-config-storage2', 'labels': ['node-role.kubernetes.io/storage=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.194']}]}, {'name': 'node-config-storage3', 'labels': ['node-role.kubernetes.io/storage=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.195']}]}, {'name': 'node-config-storage4', 'labels': ['node-role.kubernetes.io/storage=true'], 'edits': [{'key': 'kubeletArguments.node-ip', 'value': ['192.168.105.248']}]}]
+
+oreg_url=sttocp1.sf.prosa.com.mx:5000/prosa_sf-red_hat_container_catalog-ose-${component}:${version}
+openshift_service_catalog_image_prefix="sttocp1.sf.prosa.com.mx:5000/prosa_sf-red_hat_container_catalog-"
+osm_etcd_image=sttocp1.sf.prosa.com.mx:5000/prosa_sf-red_hat_container_catalog-etcd:3.2.28
+
+openshift_master_cluster_hostname=cnsocp1.sf.prosa.com.mx
+openshift_master_cluster_public_hostname=cnsocp1.sf.prosa.com.mx
+openshift_master_api_port=443
+openshift_master_console_port=443
+openshift_master_overwrite_named_certificates=true
+openshift_master_named_certificates=[{"certfile": "/root/rh/certs/cnsocp1.sf.prosa.com.mx.cer", "keyfile": "/root/rh/certs/cnsocp1.sf.prosa.com.mx.key", "cafile": "/root/rh/certs/CAroot.cer"}]
+
+
+
+
+# registry
+openshift_hosted_registry_storage_kind=glusterfs
+openshift_hosted_registry_storage_volume_size=300Gi
+openshift_hosted_registry_selector="node-role.kubernetes.io/infra=true"
+
+
+# logging
+openshift_logging_install_logging=true
+openshift_metrics_storage_kind=dynamic
+openshift_logging_es_pvc_size=250Gi
+openshift_logging_es_cluster_size=1
+openshift_logging_es_pvc_dynamic=true
+openshift_logging_es_pvc_storage_class_name='glusterfs-storage-block'
+openshift_logging_kibana_nodeselector={"node-role.kubernetes.io/logging":"true"}
+openshift_logging_curator_nodeselector={"node-role.kubernetes.io/logging":"true"}
+openshift_logging_es_nodeselector={"node-role.kubernetes.io/logging":"true"}
+
+
+# metrics
+openshift_metrics_install_metrics=true
+openshift_metrics_duration=30
+openshift_metrics_storage_kind=dynamic
+openshift_master_dynamic_provisioning_enabled=true
+openshift_metrics_storage_volume_size=100Gi
+openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-storage-block'
+openshift_metrics_cassandra_storage_type=dynamic
+openshift_metrics_hawkular_nodeselector={"node-role.kubernetes.io/metrics":"true"}
+openshift_metrics_cassandra_nodeselector={"node-role.kubernetes.io/metrics":"true"}
+openshift_metrics_heapster_nodeselector={"node-role.kubernetes.io/metrics":"true"}
+
+# prometheous operator
+openshift_cluster_monitoring_operator_install=true
+openshift_cluster_monitoring_operator_node_selector={"node-role.kubernetes.io/metrics":"true"}
+openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
+openshift_cluster_monitoring_operator_prometheus_storage_capacity=150Gi
+openshift_cluster_monitoring_operator_prometheus_storage_class_name='glusterfs-storage-block'
+openshift_cluster_monitoring_operator_alertmanager_storage_class_name='glusterfs-storage-block'
+
+
+# Container image to use for glusterfs pods
+openshift_storage_glusterfs_image="sttocp1.sf.prosa.com.mx:5000/prosa_sf-red_hat_container_catalog-rhgs-server-rhel7:v3.11"
+
+# Container image to use for glusterblock-provisioner pod
+openshift_storage_glusterfs_block_image="sttocp1.sf.prosa.com.mx:5000/prosa_sf-red_hat_container_catalog-rhgs-gluster-block-prov-rhel7:v3.11"
+
+# Container image to use for heketi pods
+openshift_storage_glusterfs_heketi_image="sttocp1.sf.prosa.com.mx:5000/prosa_sf-red_hat_container_catalog-rhgs-volmanager-rhel7:v3.11"
+
+# OCS storage cluster
+openshift_storage_glusterfs_namespace=app-storage
+openshift_storage_glusterfs_storageclass=true
+openshift_storage_glusterfs_storageclass_default=false
+openshift_storage_glusterfs_block_deploy=true
+openshift_storage_glusterfs_block_host_vol_size=250
+openshift_storage_glusterfs_block_storageclass=true
+openshift_storage_glusterfs_block_storageclass_default=false
+
+
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
+openshift_master_htpasswd_users={'admin': '$apr1$TpT26.TO$BDOFDCj1VJ1qgtL0xnXo31'}
+openshift_docker_additional_registries=sttocp1.sf.prosa.com.mx:5000
+openshift_docker_insecure_registries=sttocp1.sf.prosa.com.mx:5000
+openshift_docker_blocked_registries=registry.access.redhat.com,docker.io
+openshift_master_default_subdomain=cloudappocp.sf.prosa.com.mx
+
+
+[root@ansocp1 rh]#
